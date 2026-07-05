@@ -1,0 +1,16 @@
+{
+    "name": "Zee News Hindi",
+    "base_url": "https://zeenews.india.com/hindi",
+    "article_list_url": "https://zeenews.india.com/hindi/latest-news",
+    "article_link_selector": "div.news_title a",
+    "title_selector": "h1",
+    "body_selector": "div.article_content",
+    "image_selector": "div.article_image img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international"
+    },
+    "language": "hi",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}

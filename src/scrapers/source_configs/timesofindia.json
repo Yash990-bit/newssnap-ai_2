@@ -1,0 +1,17 @@
+{
+    "name": "Times of India",
+    "base_url": "https://timesofindia.indiatimes.com",
+    "article_list_url": "https://timesofindia.indiatimes.com/briefs",
+    "article_link_selector": "div.brief_box a",
+    "title_selector": "h1",
+    "body_selector": "div._s30J",
+    "image_selector": "div._2_F0 img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international",
+        "business": "business"
+    },
+    "language": "en",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}
