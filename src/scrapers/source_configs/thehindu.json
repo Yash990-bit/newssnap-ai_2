@@ -1,0 +1,16 @@
+{
+    "name": "The Hindu",
+    "base_url": "https://www.thehindu.com",
+    "article_list_url": "https://www.thehindu.com/feeder/default.rss",
+    "article_link_selector": null,
+    "title_selector": null,
+    "body_selector": null,
+    "image_selector": null,
+    "category_mapping": {
+        "national": "national",
+        "international": "international"
+    },
+    "language": "en",
+    "scrape_type": "rss",
+    "rate_limit_seconds": 2
+}

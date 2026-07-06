@@ -1,0 +1,16 @@
+{
+    "name": "Hindustan Times",
+    "base_url": "https://www.hindustantimes.com",
+    "article_list_url": "https://www.hindustantimes.com/latest-news",
+    "article_link_selector": "h3.hdg3 a",
+    "title_selector": "h1.hdg1",
+    "body_selector": "div.detail",
+    "image_selector": "picture.storyImg img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international"
+    },
+    "language": "en",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}

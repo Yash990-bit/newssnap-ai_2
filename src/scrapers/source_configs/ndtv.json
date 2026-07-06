@@ -1,29 +1,17 @@
 {
-  "name": "NDTV",
-  "base_url": "https://www.ndtv.com",
-  "article_list_url": "https://www.ndtv.com/latest",
-  "article_link_selector": "div.news_Ede a",
-  "title_selector": "h1.sp-ttl",
-  "body_selector": "div.sp-cn",
-  "image_selector": "meta[property='og:image']",
-  "category_mapping": {
-    "/india-news/": "national",
-    "/world-news/": "international",
-    "/cities/": "national",
-    "/sports-news/": "sports",
-    "/entertainment/": "entertainment",
-    "/business/": "business",
-    "/science/": "science",
-    "/education/": "education",
-    "/auto/": "automobile",
-    "/health/": "health",
-    "/opinion/": "opinion",
-    "/lifestyle/": "lifestyle",
-    "/jobs/": "jobs",
-    "/india-news/crime": "crime"
-  },
-  "language": "en",
-  "scrape_type": "playwright",
-  "rate_limit_seconds": 2,
-  "priority": 1
+    "name": "NDTV",
+    "base_url": "https://www.ndtv.com",
+    "article_list_url": "https://www.ndtv.com/latest",
+    "article_link_selector": "div.news_Itm h2.newsHdng a",
+    "title_selector": "h1.sp-tit",
+    "body_selector": "div.sp-cn",
+    "image_selector": "div.ins_storybody picture img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international",
+        "business": "business"
+    },
+    "language": "en",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
 }

@@ -1,0 +1,16 @@
+{
+    "name": "Aaj Tak",
+    "base_url": "https://www.aajtak.in",
+    "article_list_url": "https://www.aajtak.in/latest-news",
+    "article_link_selector": "div.story-heading a",
+    "title_selector": "h1",
+    "body_selector": "div.story-detail",
+    "image_selector": "div.story-image img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international"
+    },
+    "language": "hi",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}

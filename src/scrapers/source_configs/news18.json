@@ -1,0 +1,16 @@
+{
+    "name": "News18",
+    "base_url": "https://www.news18.com",
+    "article_list_url": "https://www.news18.com/latest-news/",
+    "article_link_selector": "div.blog-list-blog h4 a",
+    "title_selector": "h1",
+    "body_selector": "div.article-content-box",
+    "image_selector": "figure.article-img img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international"
+    },
+    "language": "en",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}

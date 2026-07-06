@@ -1,0 +1,16 @@
+{
+    "name": "Indian Express",
+    "base_url": "https://indianexpress.com",
+    "article_list_url": "https://indianexpress.com/latest-news/",
+    "article_link_selector": "div.articles h2.title a",
+    "title_selector": "h1.native_story_title",
+    "body_selector": "div.story_details",
+    "image_selector": "span.custom-caption img",
+    "category_mapping": {
+        "india": "national",
+        "world": "international"
+    },
+    "language": "en",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}

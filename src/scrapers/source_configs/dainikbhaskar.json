@@ -1,0 +1,16 @@
+{
+    "name": "Dainik Bhaskar",
+    "base_url": "https://www.bhaskar.com",
+    "article_list_url": "https://www.bhaskar.com/latest-news/",
+    "article_link_selector": "div.headline a",
+    "title_selector": "h1",
+    "body_selector": "div.story-content",
+    "image_selector": "div.story-image img",
+    "category_mapping": {
+        "national": "national",
+        "international": "international"
+    },
+    "language": "hi",
+    "scrape_type": "playwright",
+    "rate_limit_seconds": 2
+}
