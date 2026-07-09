@@ -5,7 +5,7 @@ from enum import Enum
 from urllib.parse import urlparse, urlunparse
 
 from pydantic import model_validator
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Language(str, Enum):
@@ -56,9 +56,6 @@ class UserRole(str, Enum):
     ADMIN = "admin"
 
 
-
-
-
 class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql://newssnap:newssnap@localhost:5432/newssnap"
     DATABASE_POOL_SIZE: int = 10
@@ -76,9 +73,7 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_SECRET: str = "your_google_client_secret_here"
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/auth/google/callback"
 
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @model_validator(mode="after")
     def adjust_docker_urls(self) -> "Settings":
@@ -92,11 +87,9 @@ class Settings(BaseSettings):
                         if parsed.hostname in ("db", "redis", "meilisearch"):
                             netloc = parsed.netloc.replace(parsed.hostname, "localhost")
                             setattr(self, field, urlunparse(parsed._replace(netloc=netloc)))
-                    except Exception:
+                    except ValueError:
                         pass
         return self
 
 
 settings = Settings()
-
-
