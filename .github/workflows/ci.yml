@@ -54,7 +54,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lint
+      - name: Lint (Ruff)
         run: ruff check src/
 
       - name: Run tests
