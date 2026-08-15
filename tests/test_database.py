@@ -24,9 +24,19 @@ def test_models_exist_and_query():
     tables = inspector.get_table_names()
 
     expected_tables = [
-        "users", "user_preferences", "categories", "sources",
-        "articles", "article_embeddings", "snaps", "snap_translations",
-        "stories", "story_articles", "interactions", "comments", "notifications"
+        "users",
+        "user_preferences",
+        "categories",
+        "sources",
+        "articles",
+        "article_embeddings",
+        "snaps",
+        "snap_translations",
+        "stories",
+        "story_articles",
+        "interactions",
+        "comments",
+        "notifications",
     ]
     for table in expected_tables:
         assert table in tables, f"Table {table} not found in database"
@@ -41,11 +51,7 @@ def test_timestamp_mixin():
     try:
         # Create a category to test
         test_slug = f"test_cat_{uuid.uuid4().hex[:8]}"
-        category = Category(
-            slug=test_slug,
-            name="Test Category",
-            is_active=True
-        )
+        category = Category(slug=test_slug, name="Test Category", is_active=True)
         session.add(category)
         session.commit()
 
@@ -105,7 +111,7 @@ def test_article_cascading_deletes():
                 name="Cascade Test User",
                 role=UserRole.READER,
                 is_active=True,
-                is_onboarded=True
+                is_onboarded=True,
             )
             session.add(user)
             session.commit()
@@ -128,28 +134,13 @@ def test_article_cascading_deletes():
         session.flush()
 
         # 3. Create dependent entities
-        snap = Snap(
-            id=uuid.uuid4(),
-            article_id=article_id,
-            summary="Test Snap Summary",
-            language=Language.ENGLISH
-        )
+        snap = Snap(id=uuid.uuid4(), article_id=article_id, summary="Test Snap Summary", language=Language.ENGLISH)
         session.add(snap)
 
-        interaction = Interaction(
-            id=uuid.uuid4(),
-            user_id=user.id,
-            article_id=article_id,
-            type="like"
-        )
+        interaction = Interaction(id=uuid.uuid4(), user_id=user.id, article_id=article_id, type="like")
         session.add(interaction)
 
-        comment = Comment(
-            id=uuid.uuid4(),
-            user_id=user.id,
-            article_id=article_id,
-            content="Test Comment Body"
-        )
+        comment = Comment(id=uuid.uuid4(), user_id=user.id, article_id=article_id, content="Test Comment Body")
         session.add(comment)
 
         session.commit()
@@ -178,21 +169,42 @@ def test_required_indexes_exist():
     inspector = inspect(engine)
 
     # 1. Articles indexes
-    assert any("publish_time" in idx or "publish_time" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("articles") for idx in [idx_info]), "publish_time index missing on articles"
-    assert any("language" in idx or "language" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("articles") for idx in [idx_info]), "language index missing on articles"
-    assert any("source_id" in idx or "source_id" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("articles") for idx in [idx_info]), "source_id index missing on articles"
+    assert any(
+        "publish_time" in idx or "publish_time" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("articles")
+        for idx in [idx_info]
+    ), "publish_time index missing on articles"
+    assert any(
+        "language" in idx or "language" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("articles")
+        for idx in [idx_info]
+    ), "language index missing on articles"
+    assert any(
+        "source_id" in idx or "source_id" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("articles")
+        for idx in [idx_info]
+    ), "source_id index missing on articles"
 
     # 2. Interactions indexes
-    assert any("user_id" in idx or "user_id" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("interactions") for idx in [idx_info]), "user_id index missing on interactions"
-    assert any("article_id" in idx or "article_id" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("interactions") for idx in [idx_info]), "article_id index missing on interactions"
+    assert any(
+        "user_id" in idx or "user_id" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("interactions")
+        for idx in [idx_info]
+    ), "user_id index missing on interactions"
+    assert any(
+        "article_id" in idx or "article_id" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("interactions")
+        for idx in [idx_info]
+    ), "article_id index missing on interactions"
 
     # 3. Snaps indexes
-    assert any("article_id" in idx or "article_id" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("snaps") for idx in [idx_info]), "article_id index missing on snaps"
-    assert any("language" in idx or "language" in "".join(idx_info["column_names"])
-               for idx_info in inspector.get_indexes("snaps") for idx in [idx_info]), "language index missing on snaps"
+    assert any(
+        "article_id" in idx or "article_id" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("snaps")
+        for idx in [idx_info]
+    ), "article_id index missing on snaps"
+    assert any(
+        "language" in idx or "language" in "".join(idx_info["column_names"])
+        for idx_info in inspector.get_indexes("snaps")
+        for idx in [idx_info]
+    ), "language index missing on snaps"
