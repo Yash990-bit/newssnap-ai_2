@@ -73,6 +73,15 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_SECRET: str = "your_google_client_secret_here"
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/auth/google/callback"
 
+    # Groq LLM
+    GROQ_API_KEY: str = "your_groq_api_key_here"
+    GROQ_MODEL: str = "llama3-8b-8192"
+
+    # Summarizer
+    SUMMARY_MIN_WORDS: int = 60
+    SUMMARY_MAX_WORDS: int = 80
+    SUMMARY_MAX_RETRIES: int = 2
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @model_validator(mode="after")
