@@ -2,7 +2,7 @@
 
 import uuid
 
-from sqlalchemy import Boolean, Column, DateTime, Enum, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Boolean, Column, DateTime, Enum, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.orm import relationship
 
@@ -128,7 +128,7 @@ class ArticleEmbedding(Base, TimestampMixin):
         primary_key=True,
     )
     embedding = Column(
-        ARRAY(Float),
+        ARRAY(Float).with_variant(JSON, "sqlite"),
         nullable=False,
     )
 
