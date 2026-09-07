@@ -94,6 +94,11 @@ class Article(Base, TimestampMixin):
         "Category",
         backref="articles",
     )
+    story = relationship(
+        "Story",
+        foreign_keys=[story_id],
+        back_populates="articles",
+    )
     embedding = relationship(
         "ArticleEmbedding",
         back_populates="article",

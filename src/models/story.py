@@ -31,6 +31,11 @@ class Story(Base, TimestampMixin):
         foreign_keys=[primary_article_id],
         backref="primary_story",
     )
+    articles = relationship(
+        "Article",
+        foreign_keys="[Article.story_id]",
+        back_populates="story",
+    )
 
 
 class StoryArticle(Base, TimestampMixin):
