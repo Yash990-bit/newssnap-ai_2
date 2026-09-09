@@ -82,6 +82,10 @@ class Settings(BaseSettings):
     SUMMARY_MAX_WORDS: int = 80
     SUMMARY_MAX_RETRIES: int = 2
 
+    # Translation
+    SUPPORTED_LANGUAGES: list[str] = ["en", "hi", "ta", "te", "kn"]
+    TRANSLATION_TIMEOUT_SECONDS: float = 10.0
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @model_validator(mode="after")
