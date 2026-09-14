@@ -61,7 +61,7 @@ class SnapGenerator:
 
         # 3. Source + Timestamp at bottom
         # Format time-ago or just date. Mocking time-ago as '2h ago'
-        source_text = f"{source} • 2h ago"
+        source_text = f"{source} - 2h ago"
         source_font = get_font_for_language(language, self.template["source_font_size"])
 
         source_bbox = draw.textbbox((0, 0), source_text, font=source_font)
