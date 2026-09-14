@@ -19,7 +19,7 @@ from urllib.parse import urljoin, urlparse
 
 import httpx
 from bs4 import BeautifulSoup
-from PIL import Image
+from PIL import Image, ImageDraw
 
 logger = logging.getLogger(__name__)
 
@@ -382,12 +382,12 @@ def resize_to_16x9(
     src_ratio = src_w / src_h
 
     if src_ratio > target_ratio:
-        # Source is wider — scale by height, crop width
+        # Source is wider -- scale by height, crop width
         scale = target_height / src_h
         new_w = int(src_w * scale)
         new_h = target_height
     else:
-        # Source is taller — scale by width, crop height
+        # Source is taller -- scale by width, crop height
         scale = target_width / src_w
         new_w = target_width
         new_h = int(src_h * scale)
@@ -550,3 +550,61 @@ def process_image(
     placeholder = get_placeholder_image(category)
     placeholder = resize_to_16x9(placeholder, target_width, target_height)
     return placeholder, True
+
+
+# ---------------------------------------------------------------------------
+# Snap Image Handler Class (Issue 14 & 15 Integration)
+# ---------------------------------------------------------------------------
+
+
+class ImageHandler:
+    """Handles image processing operations for snaps."""
+
+    @staticmethod
+    def process_lead_image(
+        image_url: str,
+        target_width: int,
+        target_height: int,
+        placeholder_color: str = "#E5E5EA",
+    ) -> Image.Image:
+        """Download and crop/resize the lead image to fit the target dimensions."""
+        if not image_url:
+            return Image.new("RGB", (target_width, target_height), color=placeholder_color)
+
+        try:
+            img = download_image(image_url)
+        except Exception:
+            return Image.new("RGB", (target_width, target_height), color=placeholder_color)
+
+        target_ratio = target_width / target_height
+        img_ratio = img.width / img.height
+
+        if img_ratio > target_ratio:
+            new_width = int(img.height * target_ratio)
+            left = (img.width - new_width) // 2
+            img = img.crop((left, 0, left + new_width, img.height))
+        elif img_ratio < target_ratio:
+            new_height = int(img.width / target_ratio)
+            top = (img.height - new_height) // 2
+            img = img.crop((0, top, img.width, top + new_height))
+
+        return img.resize((target_width, target_height), Image.Resampling.LANCZOS)
+
+    @staticmethod
+    def draw_rounded_rectangle(
+        draw: ImageDraw.Draw,
+        xy: list[int],
+        radius: int,
+        fill: str,
+    ) -> None:
+        """Draw a rounded rectangle."""
+        draw.rounded_rectangle(xy, radius=radius, fill=fill)
+
+    def extract_and_process(self, url: str) -> Image.Image:
+        """Extract and process lead image for an article URL."""
+        img, _ = process_image(url)
+        return img
+
+    def get_placeholder(self, category: str) -> Image.Image:
+        """Get placeholder image for a category."""
+        return get_placeholder_image(category)
