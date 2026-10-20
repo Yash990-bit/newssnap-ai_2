@@ -598,3 +598,12 @@ class TestRedisCachingAndPerformance:
             assert "trending:velocity:en" in call_args[0][0]
         finally:
             set_redis_client(None)
+
+    def test_trending_scheduler_5_minute_refresh_job(self):
+        """AC: Velocity computed in Redis, refreshed every 5 minutes (scheduler job)."""
+        from src.scheduler.jobs import TRENDING_JOB_ID, create_scheduler
+
+        scheduler = create_scheduler(async_mode=True)
+        job = scheduler.get_job(TRENDING_JOB_ID)
+        assert job is not None, "Trending refresh job should be registered in scheduler"
+        assert job.trigger.interval.total_seconds() == 300, "Interval should be 300s (5 minutes)"
